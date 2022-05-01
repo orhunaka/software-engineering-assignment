@@ -1,5 +1,5 @@
 
-public class Service {
+public class Service implements Profitable{
 
 	private String carPlate;
 	private double revenue = 0;
@@ -19,6 +19,12 @@ public class Service {
 
 	public void makeTransaction(double value) {
 		setRevenue(value);
+	}
+
+	@Override
+	public double calculate() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

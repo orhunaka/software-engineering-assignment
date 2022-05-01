@@ -25,4 +25,9 @@ public class GasolineService extends FuelService {
 			super.makeTransaction(value * getLitersBought());
 	}
 
+	@Override
+	public double calculate() {
+		return revenue;
+	}
+
 }

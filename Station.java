@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Station {
@@ -6,7 +8,8 @@ public class Station {
 	private int ID;
 	private Gasoline[] gasolineArray;
 	private Diesel[] dieselArray;
-	private Service[] serviceArray;
+	private ArrayList<Service> serviceArray;
+	private ArrayList<Person> personList;
 
 	private int gCounter = 0;
 	private int dCounter = 0;
@@ -23,7 +26,8 @@ public class Station {
 		this.ID = ID;
 		gasolineArray = new Gasoline[10];
 		dieselArray = new Diesel[10];
-		serviceArray = new Service[10];
+		serviceArray = new ArrayList<Service>();
+		personList = new ArrayList<Person>();
 	}
 
 	public String getStationName() {
@@ -75,7 +79,7 @@ public class Station {
 	}
 
 	public void addToServiceList(Service service) {
-		serviceArray[sCounter++] = service;
+		serviceArray.add(service);
 	}
 
 	public void calculateAverageGasolinePrice() {
@@ -232,6 +236,9 @@ public class Station {
 					gS.makeTransaction(station.averageGasolinePrice);
 					station.setTotalGasolineInStation(station.getTotalGasolineInStation() - liter);
 					station.addToServiceList(gS);
+					Collections.shuffle(station.personList);
+					System.out.println("Personnel helped during this service: ");
+					System.out.print("Name: " + station.personList.get(1).getName() + "\nSurname: " + station.personList.get(1).getSurname() + "\n");
 					flag = true;
 					break;
 				} else {
@@ -271,6 +278,9 @@ public class Station {
 					dS.makeTransaction(station.averageDieselPrice);
 					station.setTotalDieselInStation(station.getTotalDieselInStation() - liter);
 					station.addToServiceList(dS);
+					Collections.shuffle(station.personList);
+					System.out.println("Personnel helped during this service: ");
+					System.out.print("Name: " + station.personList.get(1).getName() + "\nSurname: " + station.personList.get(1).getSurname() + "\n");
 					flag = true;
 					break;
 				} else {
@@ -305,5 +315,87 @@ public class Station {
 			System.out.println("No station found with the given ID!");
 		}
 	}
+
+	public static void sellCarWash(Station[] stationArray) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Please enter the ID of the Station you want to sell car wash: ");
+		int ID = sc.nextInt();
+		System.out.println();
+		boolean flag = false;
+		for (Station station : stationArray) {
+			if (station != null && station.getID() == ID) {
+				System.out.print("Please enter the car plate: ");
+				String carPlate = sc.nextLine();
+				CarWash carWash = new CarWash(carPlate);
+				station.serviceArray.add(carWash);
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			System.out.println("No station found with the given ID!");
+		}
+	}
+
+    public static void addPerson(Station[] stationArray) {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.print("1. Add a personnel\n2. Add a manager");
+		int pmChoice = sc.nextInt();
+		System.out.print("Please enter the ID of the Station you want to add a person: ");
+		int ID = sc.nextInt();
+		System.out.println();
+		boolean flag = false;
+		for (Station station : stationArray) {
+			if (station != null && station.getID() == ID && pmChoice == 1) {
+				System.out.print("Please enter a name: ");
+				String name = sc.nextLine();
+				System.out.print("Please enter a surname: ");
+				String surname = sc.nextLine();
+				Personnel personnel = new Personnel(name, surname);
+				station.personList.add(personnel);
+				flag = true;
+				break;
+			}
+			if (station != null && station.getID() == ID && pmChoice == 2) {
+				System.out.print("Please enter a name: ");
+				String name = sc.nextLine();
+				System.out.print("Please enter a surname: ");
+				String surname = sc.nextLine();
+				Manager manager = new Manager(name, surname);
+				station.personList.add(manager);
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			System.out.println("No station found with the given ID!");
+		}
+    }
+
+    public static void calculateNetProfit(Station[] stationArray) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Please enter the ID of the Station you want to add a person: ");
+		int ID = sc.nextInt();
+		System.out.println();
+		double profit = 0;
+		boolean flag = false;
+		for (Station station : stationArray) {
+			if (station != null && station.getID() == ID) {
+				for (Person person : station.personList) {
+					System.out.print("Person: " + person.calculate() + ("\n"));
+					profit += person.calculate();
+				}
+				for (Service service : station.serviceArray) {
+					System.out.print("Service: " + service.calculate() + ("\n"));
+					profit += service.calculate();
+				}
+			}
+			
+		}
+		if (!flag) {
+			System.out.println("No station found with the given ID!");
+		}
+    }
 
 }
