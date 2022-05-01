@@ -21,6 +21,10 @@ public class Service implements Profitable{
 		setRevenue(value);
 	}
 
+	public double getRevenue() {
+		return revenue;
+	}
+
 	@Override
 	public double calculate() {
 		// TODO Auto-generated method stub

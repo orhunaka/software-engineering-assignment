@@ -27,7 +27,7 @@ public class GasolineService extends FuelService {
 
 	@Override
 	public double calculate() {
-		return revenue;
+		return getRevenue();
 	}
 
 }

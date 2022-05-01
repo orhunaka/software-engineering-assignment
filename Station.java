@@ -9,7 +9,8 @@ public class Station {
 	private Gasoline[] gasolineArray;
 	private Diesel[] dieselArray;
 	private ArrayList<Service> serviceArray;
-	private ArrayList<Person> personList;
+	private ArrayList<Personnel> personnelList;
+	private ArrayList<Manager> managerList;
 
 	private int gCounter = 0;
 	private int dCounter = 0;
@@ -27,7 +28,8 @@ public class Station {
 		gasolineArray = new Gasoline[10];
 		dieselArray = new Diesel[10];
 		serviceArray = new ArrayList<Service>();
-		personList = new ArrayList<Person>();
+		personnelList = new ArrayList<Personnel>();
+		managerList = new ArrayList<Manager>();
 	}
 
 	public String getStationName() {
@@ -236,9 +238,10 @@ public class Station {
 					gS.makeTransaction(station.averageGasolinePrice);
 					station.setTotalGasolineInStation(station.getTotalGasolineInStation() - liter);
 					station.addToServiceList(gS);
-					Collections.shuffle(station.personList);
+					Collections.shuffle(station.personnelList);
+					station.personnelList.get(0).setJobCount(station.personnelList.get(0).getJobCount() + 1);
 					System.out.println("Personnel helped during this service: ");
-					System.out.print("Name: " + station.personList.get(1).getName() + "\nSurname: " + station.personList.get(1).getSurname() + "\n");
+					System.out.print("Name: " + station.personnelList.get(0).getName() + "\nSurname: " + station.personnelList.get(0).getSurname() + "\n");
 					flag = true;
 					break;
 				} else {
@@ -278,9 +281,10 @@ public class Station {
 					dS.makeTransaction(station.averageDieselPrice);
 					station.setTotalDieselInStation(station.getTotalDieselInStation() - liter);
 					station.addToServiceList(dS);
-					Collections.shuffle(station.personList);
+					Collections.shuffle(station.personnelList);
+					station.personnelList.get(0).setJobCount(station.personnelList.get(0).getJobCount() + 1);
 					System.out.println("Personnel helped during this service: ");
-					System.out.print("Name: " + station.personList.get(1).getName() + "\nSurname: " + station.personList.get(1).getSurname() + "\n");
+					System.out.print("Name: " + station.personnelList.get(0).getName() + "\nSurname: " + station.personnelList.get(0).getSurname() + "\n");
 					flag = true;
 					break;
 				} else {
@@ -325,10 +329,16 @@ public class Station {
 		for (Station station : stationArray) {
 			if (station != null && station.getID() == ID) {
 				System.out.print("Please enter the car plate: ");
+				sc.nextLine();
 				String carPlate = sc.nextLine();
 				CarWash carWash = new CarWash(carPlate);
+				carWash.makeTransaction(10);
 				station.serviceArray.add(carWash);
-				flag = true;
+				Collections.shuffle(station.personnelList);
+				station.personnelList.get(0).setJobCount(station.personnelList.get(0).getJobCount() + 1);
+				System.out.println("Personnel helped during this service: ");
+				System.out.print("Name: " + station.personnelList.get(0).getName() + "\nSurname: " + station.personnelList.get(0).getSurname() + "\n");
+			flag = true;
 				break;
 			}
 		}
@@ -340,7 +350,7 @@ public class Station {
     public static void addPerson(Station[] stationArray) {
 
 		Scanner sc = new Scanner(System.in);
-		System.out.print("1. Add a personnel\n2. Add a manager");
+		System.out.println("1. Add a personnel\n2. Add a manager");
 		int pmChoice = sc.nextInt();
 		System.out.print("Please enter the ID of the Station you want to add a person: ");
 		int ID = sc.nextInt();
@@ -349,21 +359,25 @@ public class Station {
 		for (Station station : stationArray) {
 			if (station != null && station.getID() == ID && pmChoice == 1) {
 				System.out.print("Please enter a name: ");
+				sc.nextLine();
 				String name = sc.nextLine();
 				System.out.print("Please enter a surname: ");
 				String surname = sc.nextLine();
 				Personnel personnel = new Personnel(name, surname);
-				station.personList.add(personnel);
+				station.personnelList.add(personnel);
 				flag = true;
 				break;
 			}
 			if (station != null && station.getID() == ID && pmChoice == 2) {
 				System.out.print("Please enter a name: ");
+				sc.nextLine();
 				String name = sc.nextLine();
 				System.out.print("Please enter a surname: ");
 				String surname = sc.nextLine();
-				Manager manager = new Manager(name, surname);
-				station.personList.add(manager);
+				System.out.print("Please enter how many years the manager is working: ");
+				int jobYear = sc.nextInt();
+				Manager manager = new Manager(name, surname, jobYear);
+				station.managerList.add(manager);
 				flag = true;
 				break;
 			}
@@ -379,23 +393,24 @@ public class Station {
 		int ID = sc.nextInt();
 		System.out.println();
 		double profit = 0;
-		boolean flag = false;
 		for (Station station : stationArray) {
 			if (station != null && station.getID() == ID) {
-				for (Person person : station.personList) {
-					System.out.print("Person: " + person.calculate() + ("\n"));
-					profit += person.calculate();
+				for (Personnel personnel : station.personnelList) {
+					System.out.print("Person: " + personnel.calculate() + ("\n"));
+					profit += personnel.calculate();
+				}
+				for (Manager manager : station.managerList) {
+					System.out.print("Person: " + manager.calculate() + ("\n"));
+					profit += manager.calculate();
 				}
 				for (Service service : station.serviceArray) {
 					System.out.print("Service: " + service.calculate() + ("\n"));
 					profit += service.calculate();
 				}
+				System.out.print("Net profit of station is: " + profit + "\n");
+				break;
 			}
 			
 		}
-		if (!flag) {
-			System.out.println("No station found with the given ID!");
-		}
     }
-
 }

@@ -34,7 +34,6 @@ public class Person implements Profitable{
 
     @Override
     public double calculate() {
-        // TODO Auto-generated method stub
         return 0;
     }
 }

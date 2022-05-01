@@ -32,7 +32,7 @@ public class DieselService extends FuelService {
 
 	@Override
 	public double calculate() {
-		return revenue;
+		return getRevenue();
 	}
 
 }
