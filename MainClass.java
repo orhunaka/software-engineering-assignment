@@ -29,8 +29,14 @@ public class MainClass {
 			} else if (choice.equals("6")) {
 				Station.sellDiesel(stationArray);
 			} else if (choice.equals("7")) {
-				Station.displayServices(stationArray);
+				Station.sellCarWash(stationArray);
 			} else if (choice.equals("8")) {
+				Station.displayServices(stationArray);
+			} else if (choice.equals("9")) {
+				Station.addPerson(stationArray);
+			} else if (choice.equals("10")) {
+				Station.calculateNetProfit(stationArray);
+			} else if (choice.equals("0")) {
 				break;
 			} else {
 				System.out.println("Wrong choice!");
