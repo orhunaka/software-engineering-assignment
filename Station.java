@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Station {
+public class Station  implements Comparable {
 
 	private String stationName;
 	private int ID;
@@ -303,6 +303,7 @@ public class Station {
 		int ID = sc.nextInt();
 		System.out.println();
 		boolean flag = false;
+		Collections.sort(stationArray.serviceArray.getRevenue());
 		for (Station station : stationArray) {
 			if (station != null && station.getID() == ID) {
 				System.out.println("Displaying the sold services of Station #" + station.getID());
@@ -413,4 +414,15 @@ public class Station {
 			
 		}
     }
+
+	public static void displayServices2(Station[] stationArray) {
+
+
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return this.;
+	}
 }
