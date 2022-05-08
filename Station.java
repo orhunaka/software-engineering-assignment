@@ -1,8 +1,11 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class Station  implements Comparable {
+public class Station {
 
 	private String stationName;
 	private int ID;
@@ -303,10 +306,10 @@ public class Station  implements Comparable {
 		int ID = sc.nextInt();
 		System.out.println();
 		boolean flag = false;
-		Collections.sort(stationArray.serviceArray.getRevenue());
 		for (Station station : stationArray) {
 			if (station != null && station.getID() == ID) {
 				System.out.println("Displaying the sold services of Station #" + station.getID());
+				Collections.sort(station.serviceArray);
 				for (Service s : station.serviceArray) {
 					if (s != null) {
 						s.displayServiceInfo();
@@ -390,7 +393,7 @@ public class Station  implements Comparable {
 
     public static void calculateNetProfit(Station[] stationArray) {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Please enter the ID of the Station you want to add a person: ");
+		System.out.print("Please enter the ID of the Station you want to calculate net profit: ");
 		int ID = sc.nextInt();
 		System.out.println();
 		double profit = 0;
@@ -416,13 +419,26 @@ public class Station  implements Comparable {
     }
 
 	public static void displayServices2(Station[] stationArray) {
-
-
-	}
-
-	@Override
-	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return this.;
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Please enter the ID of the Station you want to display: ");
+		int ID = sc.nextInt();
+		System.out.println();
+		boolean flag = false;
+		for (Station station : stationArray) {
+			if (station != null && station.getID() == ID) {
+				System.out.println("Displaying the sold services of Station #" + station.getID());
+				station.serviceArray.sort(Comparator.naturalOrder());  
+				for (Service s : station.serviceArray) {
+					if (s != null) {
+						s.displayServiceInfo();
+					}
+				}
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			System.out.println("No station found with the given ID!");
+		}
 	}
 }
