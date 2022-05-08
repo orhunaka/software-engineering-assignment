@@ -36,6 +36,8 @@ public class MainClass {
 				Station.addPerson(stationArray);
 			} else if (choice.equals("10")) {
 				Station.calculateNetProfit(stationArray);
+			} else if (choice.equals("11")) {
+				Station.displayServices2(stationArray);
 			} else if (choice.equals("0")) {
 				break;
 			} else {
