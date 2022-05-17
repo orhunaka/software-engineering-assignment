@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -125,11 +126,25 @@ public class Station {
 
 	public static Station createStation() {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Please enter the name of the Station: ");
-		String name = sc.nextLine();
-		System.out.print("Please enter the Station ID: ");
-		int ID = sc.nextInt();
-		return new Station(name, ID);
+
+		while (true) {
+
+			try {
+				System.out.print("Please enter the name of the Station: ");
+				String name = sc.nextLine();
+			} catch (InputMismatchException exception){
+	
+				System.err.print("Name must be a string.");
+			}
+				System.out.print("Please enter the Station ID: ");
+				int ID = sc.nextInt();
+				return new Station(name, ID);
+	
+			
+		}
+
+		
+		
 	}
 
 	public static void findStationAndAddGasoline(Station[] stationArray) {
