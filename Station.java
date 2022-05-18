@@ -129,18 +129,17 @@ public class Station {
 
 		while (true) {
 
-			try {
+			try
+			{
 				System.out.print("Please enter the name of the Station: ");
 				String name = sc.nextLine();
-			} catch (InputMismatchException exception){
-	
-				System.err.print("Name must be a string.");
-			}
 				System.out.print("Please enter the Station ID: ");
 				int ID = sc.nextInt();
 				return new Station(name, ID);
-	
-			
+			} catch (InputMismatchException exception)
+			{
+				System.err.print("Name must be a string.");
+			}
 		}
 
 		
