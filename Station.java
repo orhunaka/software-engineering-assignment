@@ -127,22 +127,21 @@ public class Station {
 	public static Station createStation() {
 		Scanner sc = new Scanner(System.in);
 
-		while (true)
-		{
-			try
-			{
-				System.out.print("Please enter the name of the Station: ");
-				String name = sc.nextLine();
+		System.out.print("Please enter the name of the Station: ");
+		String name = sc.nextLine();
+
+		while (true) {
+			try {
 				System.out.print("Please enter the Station ID: ");
 				int ID = sc.nextInt();
 				return new Station(name, ID);
-			} catch (InputMismatchException exception)
-			{
-				System.err.print("ID must be an integer.");
-				continue;
+			} catch (InputMismatchException exception) {
+				System.err.println("ID should be an integer");
+				sc.next();
 			}
 		}
 	}
+		
 
 	public static void findStationAndAddGasoline(Station[] stationArray) {
 		Scanner sc = new Scanner(System.in);

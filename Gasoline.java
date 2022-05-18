@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Gasoline {
@@ -28,14 +29,37 @@ public class Gasoline {
 	}
 
 	public static Gasoline createGasoline() {
+
+		String origin;
+		double pricePerLiter;
+		double totalLiters;
+
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Please enter the origin of gasoline: ");
-		String origin = sc.nextLine();
-		System.out.print("Please enter the price per liter: ");
-		double pricePerLiter = sc.nextDouble();
-		System.out.print("Please enter the total shipment volume in liter: ");
-		double totalLiters = sc.nextDouble();
-		return new Gasoline(origin, pricePerLiter, totalLiters);
+		
+		
+
+		
+
+		while (true) {
+			try {
+				System.out.print("Please enter the origin of gasoline: ");
+				origin = sc.nextLine();
+
+				System.out.print("Please enter the price per liter: ");
+				pricePerLiter = sc.nextDouble();
+
+				System.out.print("Please enter the total shipment volume in liter: ");
+				totalLiters = sc.nextDouble();
+
+				return new Gasoline(origin, pricePerLiter, totalLiters);
+
+			} catch (InputMismatchException exception) {
+				System.err.println("Price should be double...");
+				continue;
+			}
+			
+		}
+		
 	}
 
 }
