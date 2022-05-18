@@ -127,8 +127,8 @@ public class Station {
 	public static Station createStation() {
 		Scanner sc = new Scanner(System.in);
 
-		while (true) {
-
+		while (true)
+		{
 			try
 			{
 				System.out.print("Please enter the name of the Station: ");
@@ -138,12 +138,10 @@ public class Station {
 				return new Station(name, ID);
 			} catch (InputMismatchException exception)
 			{
-				System.err.print("Name must be a string.");
+				System.err.print("ID must be an integer.");
+				continue;
 			}
 		}
-
-		
-		
 	}
 
 	public static void findStationAndAddGasoline(Station[] stationArray) {
